@@ -1,0 +1,14 @@
+[
+  {
+    "url": "https://data.binance.vision/data/spot/monthly/klines/SAGAUSDT/1m/SAGAUSDT-1m-2026-08.zip",
+    "bytes": 1191055,
+    "sha256": "46d7e950ce15e6ae5a21a91f6b7c8fc4c5f68478d07c4c9ec672e32c396606b6",
+    "rows": 44640
+  },
+  {
+    "url": "https://data.binance.vision/data/spot/monthly/klines/SAGAUSDT/1m/SAGAUSDT-1m-2026-09.zip",
+    "bytes": 1508203,
+    "sha256": "bdc975ea231bda79d1acbbf14fcefb6a34fc670aa00476b77e0eb252b9f9ebb7",
+    "rows": 43200
+  }
+]
