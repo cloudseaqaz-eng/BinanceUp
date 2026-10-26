@@ -1,10 +1,8 @@
-# BinanceUp · 严格连续时长与细线显示
+# BinanceUp · K线纵轴最小涨幅跨度50%
 
 更新日期：2026-10-27（北京时间）。下载BinanceUp-research.zip，覆盖完整research目录，保留research_data。
 
-详情新增严格连续时长图：主动买入和交易各绘制C5连续≥80%、连续100%的分钟数，共四条。默认log(1+分钟)非线性纵轴，可在“时长刻度”切线性；提示框始终显示实际分钟。条件中断即归零，缺失数据留空。与K线光标联动。
-
-所有详情曲线及虚线统一不超过1 CSS px，包含原始UW展开曲线与动态窗口图；网格、K线影线、光标也为1px，蜡烛实体按密度显示。
+K线图纵轴涨幅跨度按“上界÷下界−1”计算，最小50%。可见K线高低价比不足1.5时，围绕几何中心扩展；达到或超过1.5时直接按实际最低/最高价显示。不是上下各50%，也不是绝对价格差50。前窗/周期/未来观察变动时按可见K线重算，不修改OHLC或评分。
 
 停止旧服务后启动：
 
@@ -12,8 +10,8 @@
 python -m research --root research_data serve
 ```
 
-强制刷新：Mac ⌘⇧R；Windows/Linux Ctrl+Shift+R。无需run、下载、特征重建或训练。
+强制刷新：Mac ⌘⇧R；Windows/Linux Ctrl+Shift+R。无需run、下载、生成评分特征或训练。
 
-本轮70项Chromium交互检查和JavaScript语法检查通过。线宽通过拦截实际Canvas绘制属性验证，最大1 CSS px。后端/公式未变，未重复Python套件；完整记录见RESEARCH_VALIDATION.md。
+本轮72项Chromium检查和JavaScript语法检查通过。保留全图最多1px细线、严格连续时长、3/6小时连续性状态、累计分/基线及其他图表。完整验证范围见RESEARCH_VALIDATION.md。
 
-保留6/3小时状态图、累计分及基线、原始连续性、UW和时间窗功能。包不含行情缓存或运行环境；SHA256SUMS提供校验。
+包不含行情缓存或环境，SHA256SUMS提供校验。
