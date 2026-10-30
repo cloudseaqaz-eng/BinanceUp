@@ -4,7 +4,7 @@
 
 ## 启动
 
-安装 **Node.js 24.5或更新版本**，解压后进入项目目录执行：
+安装 **Node.js 18.17或更新版本（推荐24 LTS）**，解压后进入项目目录执行：
 
 ```bash
 npm start
@@ -14,7 +14,7 @@ npm start
 
 macOS可运行`start.command`；如果系统不允许双击，在终端输入`bash `，将`start.command`拖入终端，再回车。Windows可运行`start.bat`。停止服务按Ctrl+C。
 
-默认使用币安公共现货行情域名`https://data-api.binance.vision`。若本机需要代理，Node启动参数已启用环境代理：
+默认使用币安公共现货行情域名`https://data-api.binance.vision`。启动器会自动检测环境代理功能，仅在当前Node支持时启用。需要使用`HTTP(S)_PROXY`时，推荐Node.js 24.5或更新版本：
 
 ```bash
 HTTPS_PROXY=http://127.0.0.1:7890 npm start
@@ -25,6 +25,8 @@ HTTPS_PROXY=http://127.0.0.1:7890 npm start
 ```bash
 BINANCE_API_BASE=https://api.binance.com PORT=8769 npm start
 ```
+
+不支持环境代理的旧版Node会明确提示并使用直连；不会因不识别启动参数而退出。
 
 服务只监听127.0.0.1。API访问受你所在网络及币安服务可用性影响；HTTP403/451、限流、连接超时会在侧栏明确提示，查询失败时不拼接不完整结果冒充成功数据。
 
