@@ -1,4 +1,4 @@
-# 连续性行情观察 · 独立 Node.js 项目 · 1.11.2
+# 连续性行情观察 · 独立 Node.js 项目 · 1.12.0
 
 输入币安现货USDT交易对和北京时间，通过公共API读取前窗3周、后窗1周的行情。后窗截到最近已收盘分钟。无需Python项目、已下载数据或API密钥。
 
@@ -14,12 +14,14 @@ npm start
 
 更新时先停止旧服务，替换完整项目目录，再启动并强制刷新浏览器（Mac：⌘⇧R；Windows：Ctrl+Shift+R）。本项目与评分回测、连续性回测项目独立。
 
-默认行情接口 https://www.binance.com/api/v3/uiKlines 。可用 BINANCE_API_BASE 修改域名，路径固定为 /api/v3/uiKlines。页面数据说明显示实际接口地址。代理环境变量支持推荐使用 Node.js 24.5 或更新版本；启动器仅在Node支持时启用 --use-env-proxy，兼容较早版本。
+默认行情接口 https://www.binance.com/api/v3/uiKlines 。可用 BINANCE_API_BASE 修改域名，路径固定为 /api/v3/uiKlines。页面数据说明显示实际接口地址。默认经 HTTP 代理 http://127.0.0.1:7890 建立CONNECT隧道访问币安。先启动本机代理客户端，并确认该端口支持HTTP或混合代理。该实现使用Node标准库，兼容Node 18.17及以后版本，不依赖 --use-env-proxy，也不需要 npm install。启动时显示所用代理。
 
 ```bash
-HTTPS_PROXY=http://127.0.0.1:7890 npm start
+BINANCE_PROXY=http://127.0.0.1:7890 npm start
 PORT=8770 npm start
 ```
+
+直接运行 `npm start` 已默认使用7890代理，无需重复设置。修改端口可用 `BINANCE_PROXY=http://127.0.0.1:其他端口 npm start`；需要直连时可用 `BINANCE_PROXY=direct npm start`。BINANCE_PROXY仅用于后端币安请求，浏览器访问本机服务保持直连。代理连接失败会明确报错，不会静默切换直连。
 
 ## 页面
 
@@ -65,10 +67,10 @@ UW3只计算最近3根所选周期K线的上影比例均值。上影比例为 `(
 
 ## 数据与验证
 
-1.11.2按用户要求切换为uiKlines试用：该接口是币安为展示优化的K线数据。积分和其他指标都使用同一份uiKlines响应；不自动回退或混入标准klines数据。新版本需停止旧服务并重启，以清空原进程缓存。
+1.12.0按用户要求切换为uiKlines试用：该接口是币安为展示优化的K线数据。积分和其他指标都使用同一份uiKlines响应；不自动回退或混入标准klines数据。新版本需停止旧服务并重启，以清空原进程缓存。
 
 后端通过1分钟uiKlines API分页读取，再聚合目标周期；仅使用已收盘、完整K线。EMA、积分、状态、UW、超中位数根数均先使用预热历史计算再截取显示。切换周期不会重置历史起点。会话仅在内存保留，不落盘。
 
 缺失或非法分钟不会补零。API读取失败会报错，不提交部分失败结果。429按Retry-After等待，403/451报告网络或访问限制。新上市历史不足会留空。
 
-运行 `npm test` 验证计算与接口。可选 Chromium 检查见 test/browser_check.py。当前版本48项Node测试与浏览器交互检查通过，详见 VALIDATION.md；云环境对币安访问受限，未声称真实外网API端到端验证成功。
+运行 `npm test` 验证计算与接口。可选 Chromium 检查见 test/browser_check.py。当前版本50项Node测试通过，此前版本浏览器交互检查通过，详见 VALIDATION.md；云环境对币安访问受限，未声称真实外网API端到端验证成功。
